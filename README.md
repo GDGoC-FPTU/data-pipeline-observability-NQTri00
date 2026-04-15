@@ -37,13 +37,12 @@ python solution.py
 
 ### Chay Agent Simulation (Stress Test)
 ```bash
-# Mo ta cach ban chay thi nghiem Clean vs Garbage data
-```
 Testing with CLEAN data:
 Agent: Based on my data, the best choice is Laptop at $1200.
 
 Testing with GARBAGE data:
 Agent: Based on my data, the best choice is Nuclear Reactor at $999999.
+```
 ---
 
 ## Cau truc thu muc
