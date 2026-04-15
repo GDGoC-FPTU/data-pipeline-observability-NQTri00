@@ -9,7 +9,7 @@
 
 ## Mo ta
 
-Tôi đã xây dựng một **ETL Pipeline** hoàn chỉnh (Extract - Transform - Load) sử dụng Python và Pandas.  
+Tôi đã xây dựng một **ETL Pipeline** hoàn chỉnh (Extract - Transform - Load).  
 
 Pipeline thực hiện các bước sau:
 - **Extract**: Đọc dữ liệu từ file `raw_data.json`
@@ -38,11 +38,7 @@ python solution.py
 
 ### Chay Agent Simulation (Stress Test)
 ```bash
-Testing with CLEAN data:
-Agent: Based on my data, the best choice is Laptop at $1200.
-
-Testing with GARBAGE data:
-Agent: Based on my data, the best choice is Nuclear Reactor at $999999.
+python agent_simulation.py
 ```
 ---
 
@@ -59,7 +55,8 @@ Agent: Based on my data, the best choice is Nuclear Reactor at $999999.
 
 ## Ket qua
 
-Records extracted: 5
-Records dropped during validation: 2 
-Records successfully processed: 3
-Final output: processed_data.csv (có thêm cột discounted_price, category ở dạng Title Case, và processed_at)
+Records extracted: 5 <br>
+Records dropped during validation: 2 <br>
+Records successfully processed: 3 <br>
+Final output: processed_data.csv (có thêm cột discounted_price, category ở dạng Title Case, và timestamp) <br>
+Records saved: 3

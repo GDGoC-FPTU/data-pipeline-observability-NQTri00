@@ -29,13 +29,13 @@ Lý do chính là chất lượng dữ liệu ảnh hưởng rất lớn đến 
 - **Duplicate IDs**: Dữ liệu trùng lặp làm Agent bị nhầm lẫn về số lượng và phân bố sản phẩm.
 - **Irrelevant or toxic data**: Sự xuất hiện của các mặt hàng không liên quan (Nuclear Reactor, Weapon, v.v.) làm ô nhiễm toàn bộ dataset.
 
-Những vấn đề này khiến AI Agent không thể hiểu đúng ngữ cảnh và đưa ra khuyến nghị sai lệch. Điều này chứng minh rằng **dù có prompt tốt đến đâu**, nếu dữ liệu đầu vào kém chất lượng thì output của Agent cũng sẽ kém theo.
+Những vấn đề này khiến AI Agent không thể hiểu đúng ngữ cảnh và đưa ra khuyến nghị sai lệch. Điều này chứng minh rằng nếu dữ liệu đầu vào kém chất lượng thì output của Agent cũng sẽ kém theo.
 
 ---
 
 ## 3. Ket luan
 
-**Quality Data > Quality Prompt?** → **Đồng ý mạnh mẽ.**
+**Quality Data > Quality Prompt?** → **Đồng ý**
 
 Chất lượng dữ liệu quan trọng hơn rất nhiều so với chất lượng prompt. Một prompt hoàn hảo nhưng được cung cấp dữ liệu rác (garbage in) sẽ dẫn đến kết quả rác (garbage out). Ngược lại, khi dữ liệu sạch, được validate và transform tốt, ngay cả với prompt đơn giản, AI Agent vẫn có thể đưa ra câu trả lời chính xác và đáng tin cậy.
 
