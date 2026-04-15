@@ -139,8 +139,11 @@ if __name__ == "__main__":
         # 4. Load
         if final_df is not None and not final_df.empty:
             load(final_df, OUTPUT_FILE)
-            print(f"\n🎉 Pipeline completed successfully!")
+            
+            # === SỬA LỖI Ở ĐÂY ===
+            print("\nPipeline completed successfully!")
             print(f"   Total records saved: {len(final_df)}")
+            # Hoặc nếu muốn giữ emoji: print("\nPipeline completed successfully! 🎉")
         else:
             print("\n⚠️  No data to save after transformation.")
     else:
