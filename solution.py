@@ -2,8 +2,8 @@
 ==============================================================
 Day 10 Lab: Build Your First Automated ETL Pipeline
 ==============================================================
-Student ID: AI20K-XXXX  (<-- Thay XXXX bang ma so cua ban)
-Name: Your Name Here
+Student ID: AI20K-2A202600249  (<-- Thay XXXX bang ma so cua ban)
+Name: Ninh Quang Tri
 
 Nhiem vu:
    1. Extract:   Doc du lieu tu file JSON
@@ -22,8 +22,8 @@ Cham diem tu dong:
 
 import json
 import pandas as pd
-import os
 import datetime
+import os
 
 # --- CONFIGURATION ---
 SOURCE_FILE = 'raw_data.json'
@@ -32,45 +32,50 @@ OUTPUT_FILE = 'processed_data.csv'
 
 def extract(file_path):
     """
-    Task 1: Doc du lieu JSON tu file.
-
-    Goi y:
-       - Dung json.load() de doc file JSON
-       - Xu ly truong hop file khong ton tai (FileNotFoundError)
-
-    Returns:
-        list: Danh sach cac records (dictionaries)
+    Task 1: Đọc dữ liệu JSON từ file.
     """
     print(f"Extracting data from {file_path}...")
-    # TODO: Viet code doc file JSON o day
-    # Vi du:
-    #   with open(file_path, 'r') as f:
-    #       data = json.load(f)
-    #   return data
-    pass
+    try:
+        with open(file_path, 'r', encoding='utf-8') as f:
+            data = json.load(f)
+        print(f"Successfully extracted {len(data)} records.")
+        return data
+    except FileNotFoundError:
+        print(f"Error: File '{file_path}' not found.")
+        return []
+    except json.JSONDecodeError:
+        print(f"Error: Failed to decode JSON from '{file_path}'.")
+        return []
+    except Exception as e:
+        print(f"Unexpected error during extraction: {e}")
+        return []
 
 
 def validate(data):
     """
-    Task 2: Kiem tra chat luong du lieu.
-
-    Quy tac validation:
-       - Price phai > 0 (loai bo gia am hoac bang 0)
-       - Category khong duoc rong
-
-    Goi y:
-       - Dung record.get('price', 0) de lay gia
-       - Dung record.get('category') de kiem tra category
-       - In ra so luong record hop le va khong hop le
-
-    Returns:
-        list: Danh sach cac records hop le
+    Task 2: Kiểm tra chất lượng dữ liệu.
+    Quy tắc:
+      - price > 0
+      - category không được rỗng
     """
     valid_records = []
     error_count = 0
 
-    # TODO: Lap qua data, kiem tra tung record
-    # Giu lai record hop le, dem record loi
+    for record in data:
+        price = record.get('price')
+        category = record.get('category', '')
+
+        # Check price > 0
+        if not isinstance(price, (int, float)) or price <= 0:
+            error_count += 1
+            continue
+
+        # Check category not empty
+        if not isinstance(category, str) or category.strip() == '':
+            error_count += 1
+            continue
+
+        valid_records.append(record)
 
     print(f"Validation complete. Valid: {len(valid_records)}, Errors: {error_count}")
     return valid_records
@@ -78,44 +83,48 @@ def validate(data):
 
 def transform(data):
     """
-    Task 3: Ap dung business logic.
-
-    Yeu cau:
-       - Tinh discounted_price = price * 0.9 (giam 10%)
-       - Chuan hoa category thanh Title Case (vi du: "electronics" -> "Electronics")
-       - Them cot processed_at = timestamp hien tai
-
-    Goi y:
-       - Dung pd.DataFrame(data) de tao DataFrame
-       - df['discounted_price'] = df['price'] * 0.9
-       - df['category'] = df['category'].str.title()
-       - df['processed_at'] = datetime.datetime.now().isoformat()
-
-    Returns:
-        pd.DataFrame: DataFrame da duoc transform
+    Task 3: Transform dữ liệu
+      - Tính discounted_price = price * 0.9
+      - Category → Title Case
+      - Thêm cột processed_at
     """
-    # TODO: Tao DataFrame va ap dung transformations
-    pass
+    if not data:
+        print("No valid data to transform.")
+        return None
+
+    df = pd.DataFrame(data)
+
+    # Calculate 10% discount
+    df['discounted_price'] = df['price'] * 0.9
+
+    # Normalize category to Title Case
+    df['category'] = df['category'].str.title()
+
+    # Add timestamp
+    df['processed_at'] = datetime.datetime.now().isoformat()
+
+    print(f"Transform completed: {len(df)} records processed.")
+    return df
 
 
 def load(df, output_path):
     """
-    Task 4: Luu DataFrame ra file CSV.
-
-    Goi y:
-       - df.to_csv(output_path, index=False)
+    Task 4: Lưu DataFrame ra file CSV
     """
-    # TODO: Luu DataFrame ra CSV
-    print(f"Data saved to {output_path}")
+    try:
+        df.to_csv(output_path, index=False, encoding='utf-8')
+        print(f"Data successfully saved to {output_path}")
+    except Exception as e:
+        print(f"Error saving file: {e}")
 
 
 # ============================================================
 # MAIN PIPELINE
 # ============================================================
 if __name__ == "__main__":
-    print("=" * 50)
-    print("ETL Pipeline Started...")
-    print("=" * 50)
+    print("=" * 60)
+    print("ETL Pipeline Started - Day 10 Lab")
+    print("=" * 60)
 
     # 1. Extract
     raw_data = extract(SOURCE_FILE)
@@ -128,10 +137,13 @@ if __name__ == "__main__":
         final_df = transform(clean_data)
 
         # 4. Load
-        if final_df is not None:
+        if final_df is not None and not final_df.empty:
             load(final_df, OUTPUT_FILE)
-            print(f"\nPipeline completed! {len(final_df)} records saved.")
+            print(f"\n🎉 Pipeline completed successfully!")
+            print(f"   Total records saved: {len(final_df)}")
         else:
-            print("\nTransform returned None. Check your transform() function.")
+            print("\n⚠️  No data to save after transformation.")
     else:
-        print("\nPipeline aborted: No data extracted.")
+        print("\n❌ Pipeline aborted: No data extracted.")
+
+    print("=" * 60)
